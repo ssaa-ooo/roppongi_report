@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>親子ラウンジ分析 インタラクティブ詳細レポート</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap');
+        body { font-family: 'Noto Sans JP', sans-serif; overflow-x: hidden; }
+        .section-card { @apply bg-white rounded-3xl p-8 shadow-sm border border-slate-100 hover:shadow-md transition-shadow; }
+        .ranking-number { @apply flex items-center justify-center w-6 h-6 rounded-full bg-blue-600 text-white text-[10px] font-bold flex-shrink-0; }
+        .page { display: none; }
+        .page.active { display: block; animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .nav-link.active { @apply text-blue-600 border-b-2 border-blue-600; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased">
+
+    <!-- Navigation / Header -->
+    <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="showPage('home')">
+                <div class="bg-blue-600 p-2 rounded-lg text-white"><i data-lucide="layout-dashboard"></i></div>
+                <h1 class="text-xl font-black tracking-tight">親子ラウンジ分析 <span class="text-blue-600 text-sm font-bold">INTERACTIVE REPORT</span></h1>
+            </div>
+            <nav class="flex gap-6 text-xs font-bold text-slate-500 overflow-x-auto whitespace-nowrap pb-2 md:pb-0">
+                <button onclick="showPage('home')" class="nav-link px-1 py-2 active" id="nav-home">概要サマリー</button>
+                <button onclick="showPage('profile')" class="nav-link px-1 py-2" id="nav-profile">ユーザー属性</button>
+                <button onclick="showPage('visit')" class="nav-link px-1 py-2" id="nav-visit">利用実態</button>
+                <button onclick="showPage('satisfaction')" class="nav-link px-1 py-2" id="nav-satisfaction">満足度・価格</button>
+                <button onclick="showPage('rental')" class="nav-link px-1 py-2" id="nav-rental">貸切ニーズ</button>
+                <button onclick="showPage('requests')" class="nav-link px-1 py-2" id="nav-requests">改善要望</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto p-6 my-8">
+
+        <!-- PAGE: HOME (Summary Overview) -->
+        <div id="page-home" class="page active space-y-12">
+            <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="section-card bg-blue-600 text-white border-none cursor-pointer hover:scale-105 transition-transform" onclick="showPage('satisfaction')">
+                    <p class="text-xs font-bold opacity-80 mb-2 uppercase tracking-widest text-blue-100">総合満足度</p>
+                    <div class="flex items-baseline gap-2"><span class="text-5xl font-black">52</span><span class="text-xl font-bold">%</span></div>
+                    <p class="text-[10px] mt-4 opacity-90 italic">「非常に満足」層。詳細をみる →</p>
+                </div>
+                <div class="section-card bg-indigo-600 text-white border-none cursor-pointer hover:scale-105 transition-transform" onclick="showPage('visit')">
+                    <p class="text-xs font-bold opacity-80 mb-2 uppercase tracking-widest text-indigo-100">再利用意向 (Top 2)</p>
+                    <div class="flex items-baseline gap-2"><span class="text-5xl font-black">65</span><span class="text-xl font-bold">%</span></div>
+                    <p class="text-[10px] mt-4 opacity-90 italic">リピート需要。詳細をみる →</p>
+                </div>
+                <div class="section-card bg-purple-600 text-white border-none cursor-pointer hover:scale-105 transition-transform" onclick="showPage('rental')">
+                    <p class="text-xs font-bold opacity-80 mb-2 uppercase tracking-widest text-purple-100">貸切利用意向</p>
+                    <div class="flex items-baseline gap-2"><span class="text-5xl font-black">55</span><span class="text-xl font-bold">%</span></div>
+                    <p class="text-[10px] mt-4 opacity-90 italic">イベント需要。詳細をみる →</p>
+                </div>
+            </section>
+
+            <div class="section-card bg-slate-900 text-white flex flex-col md:flex-row items-center gap-8">
+                <div class="flex-1">
+                    <h2 class="text-2xl font-black mb-4">総評：親の「体力回復拠点」としての価値</h2>
+                    <p class="text-sm text-slate-400 leading-relaxed">
+                        今回の分析により、本施設は「子供を遊ばせる場所」という枠を超え、六本木という都心における<span class="text-blue-400 font-bold">「保護者のリカバリー拠点」</span>として極めて高い独自価値を確立していることが分かりました。
+                        一方で、価格設定の柔軟性と、来店前の情報提供（空き状況）がCX向上の最大の鍵となります。
+                    </p>
+                </div>
+                <div class="bg-white/10 p-6 rounded-2xl border border-white/10">
+                    <i data-lucide="lightbulb" class="text-orange-400 w-12 h-12 mb-4"></i>
+                    <p class="text-xs font-bold text-white uppercase tracking-widest mb-1">Key Recommendation</p>
+                    <p class="text-lg font-bold text-orange-400">「30分単位設定」の検討</p>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="section-card border-t-8 border-t-orange-400" onclick="showPage('requests')" class="cursor-pointer">
+                    <h3 class="font-bold mb-4 flex justify-between"><span>期待される利用方法 Top 3</span><i data-lucide="chevron-right" class="w-4 h-4 text-slate-300"></i></h3>
+                    <div class="space-y-3">
+                        <div class="flex gap-4 items-center p-3 bg-orange-50 rounded-xl"><span class="ranking-number bg-orange-400">1</span><span class="text-xs font-bold">30分単位の短時間利用</span></div>
+                        <div class="flex gap-4 items-center p-3 bg-slate-50 rounded-xl"><span class="ranking-number bg-slate-300">2</span><span class="text-xs font-bold">靴脱ぎエリアの拡張</span></div>
+                        <div class="flex gap-4 items-center p-3 bg-slate-50 rounded-xl"><span class="ranking-number bg-slate-200">3</span><span class="text-xs font-bold">リアルタイム混雑情報</span></div>
+                    </div>
+                </div>
+                <div class="section-card border-t-8 border-t-red-500" onclick="showPage('satisfaction')" class="cursor-pointer">
+                    <h3 class="font-bold mb-4 flex justify-between"><span>主要な課題点</span><i data-lucide="chevron-right" class="w-4 h-4 text-slate-300"></i></h3>
+                    <div class="space-y-3">
+                        <div class="p-3 bg-red-50 rounded-xl border border-red-100 flex items-start gap-3">
+                            <i data-lucide="alert-triangle" class="w-4 h-4 text-red-500 mt-0.5"></i>
+                            <div><p class="text-xs font-bold text-red-700">コスパへの不満</p><p class="text-[10px] text-red-600">遊具量に対して1,650円は高いとの声</p></div>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-start gap-3">
+                            <i data-lucide="info" class="w-4 h-4 text-slate-400 mt-0.5"></i>
+                            <div><p class="text-xs font-bold text-slate-700">貸切告知の不備</p><p class="text-[10px] text-slate-500">来店して初めて貸切を知る不便さ</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE: USER PROFILE -->
+        <div id="page-profile" class="page space-y-12">
+            <h2 class="text-3xl font-black border-l-8 border-blue-600 pl-6">01. ユーザー属性：誰が、どこから？</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="section-card">
+                    <h3 class="font-bold text-slate-600 mb-6">お子様の年齢・月齢分布</h3>
+                    <div class="flex items-center gap-8">
+                        <div class="w-32 h-32 rounded-full border-[12px] border-blue-500 border-t-slate-100 flex items-center justify-center">
+                            <span class="text-2xl font-black">2<span class="text-xs">歳児</span></span>
+                        </div>
+                        <div class="flex-1 space-y-2 text-sm">
+                            <div class="flex justify-between"><span>0-1歳</span><span class="font-bold">20%</span></div>
+                            <div class="flex justify-between text-blue-600 font-bold"><span>2-3歳</span><span>55%</span></div>
+                            <div class="flex justify-between"><span>4歳以上</span><span class="font-bold">25%</span></div>
+                        </div>
+                    </div>
+                    <p class="mt-8 text-xs text-slate-500 leading-relaxed italic border-t pt-4">「ハイハイ期よりも、活発に動き回るがまだ目が離せない2歳児の保護者が、座って見守れる空間を求めて来訪している。」</p>
+                </div>
+                <div class="section-card">
+                    <h3 class="font-bold text-slate-600 mb-6">居住地とエリア分析</h3>
+                    <div class="space-y-4 text-sm">
+                        <div class="p-4 bg-green-50 rounded-2xl border border-green-100 flex justify-between items-center">
+                            <span class="font-bold text-green-700">港区（最頻エリア）</span>
+                            <span class="text-xs bg-white px-2 py-1 rounded-full shadow-sm">近隣・常連層</span>
+                        </div>
+                        <div class="p-4 bg-slate-50 rounded-2xl border border-slate-100 flex justify-between items-center">
+                            <span class="font-bold text-slate-700">杉並区・中野区</span>
+                            <span class="text-xs bg-white px-2 py-1 rounded-full shadow-sm">目的地・お出かけ層</span>
+                        </div>
+                        <div class="p-4 bg-slate-50 rounded-2xl border border-slate-100 flex justify-between items-center">
+                            <span class="font-bold text-slate-700">その他（都外・広域）</span>
+                            <span class="text-xs bg-white px-2 py-1 rounded-full shadow-sm">インバウンド・帰省</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section-card">
+                <h3 class="font-bold text-slate-600 mb-6">普段親子で過ごす場所（複数回答可）</h3>
+                <div class="flex flex-wrap gap-4">
+                    <div class="bg-blue-50 p-4 rounded-3xl border border-blue-100 flex items-center gap-3">
+                        <i data-lucide="shopping-bag" class="text-blue-500"></i><span class="font-bold">商業施設・百貨店</span>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-3xl border border-blue-100 flex items-center gap-3">
+                        <i data-lucide="coffee" class="text-blue-500"></i><span class="font-bold">カフェ・レストラン</span>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-3xl border border-slate-200 flex items-center gap-3 text-slate-500">
+                        <i data-lucide="tree-pine" class="text-slate-400"></i><span>近所の公園</span>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-3xl border border-slate-200 flex items-center gap-3 text-slate-500">
+                        <i data-lucide="library" class="text-slate-400"></i><span>図書館・児童館</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE: VISIT -->
+        <div id="page-visit" class="page space-y-12">
+            <h2 class="text-3xl font-black border-l-8 border-indigo-600 pl-6">02. 利用実態：流入経路と目的</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="section-card">
+                    <h3 class="font-bold text-slate-600 mb-6">どこで知りましたか？（認知）</h3>
+                    <div class="space-y-5">
+                        <div class="flex items-center gap-4">
+                            <i data-lucide="instagram" class="text-pink-500"></i>
+                            <div class="flex-1">
+                                <div class="flex justify-between text-xs font-bold mb-1"><span>Instagram（公式/一般）</span><span>45%</span></div>
+                                <div class="h-2 bg-slate-100 rounded-full"><div class="h-full bg-pink-500 rounded-full w-[45%]"></div></div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <i data-lucide="eye" class="text-blue-500"></i>
+                            <div class="flex-1">
+                                <div class="flex justify-between text-xs font-bold mb-1"><span>店頭・通りがかり</span><span>35%</span></div>
+                                <div class="h-2 bg-slate-100 rounded-full"><div class="h-full bg-blue-500 rounded-full w-[35%]"></div></div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4 text-slate-400">
+                            <i data-lucide="users-2" class="w-5 h-5"></i>
+                            <div class="flex-1">
+                                <div class="flex justify-between text-xs font-bold mb-1"><span>知人の紹介</span><span>20%</span></div>
+                                <div class="h-2 bg-slate-100 rounded-full"><div class="h-full bg-slate-300 rounded-full w-[20%]"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-card">
+                    <h3 class="font-bold text-slate-600 mb-6">利用人数と構成</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="p-6 bg-indigo-50 rounded-3xl border border-indigo-100 text-center">
+                            <i data-lucide="user" class="mx-auto mb-2 text-indigo-500"></i>
+                            <p class="text-xs font-bold text-indigo-700">子どもと2人</p>
+                            <p class="text-2xl font-black text-indigo-900">60%</p>
+                        </div>
+                        <div class="p-6 bg-slate-50 rounded-3xl border border-slate-200 text-center">
+                            <i data-lucide="users" class="mx-auto mb-2 text-slate-400"></i>
+                            <p class="text-xs font-bold text-slate-500">ご家族3人以上</p>
+                            <p class="text-2xl font-black text-slate-700">40%</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section-card bg-indigo-900 text-white">
+                <h3 class="font-bold text-indigo-300 mb-6 flex items-center gap-2 italic"><i data-lucide="quote" class="w-4 h-4"></i> 利用目的の具体的なシーン</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="p-5 bg-white/5 rounded-2xl border border-white/10 text-xs leading-relaxed italic">
+                        「妻がエストネーションで買い物中、パパと子供がここで待つ。足が休まって助かります。」
+                    </div>
+                    <div class="p-5 bg-white/5 rounded-2xl border border-white/10 text-xs leading-relaxed italic">
+                        「友達とのランチ後の2次会。カフェだと子供が騒ぐのが怖いが、ここなら安心。」
+                    </div>
+                    <div class="p-5 bg-white/5 rounded-2xl border border-white/10 text-xs leading-relaxed italic">
+                        「次の映画や予定まであと45分。ヒルズ内のベンチは埋まっているが、ここなら座れる。」
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE: SATISFACTION -->
+        <div id="page-satisfaction" class="page space-y-12">
+            <h2 class="text-3xl font-black border-l-8 border-orange-500 pl-6">03. 満足度・価格感：価値のギャップ分析</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="section-card border-l-8 border-l-blue-600">
+                    <h3 class="font-bold text-slate-600 mb-4">満足度：52%（非常に満足）</h3>
+                    <div class="flex gap-1 mb-6">
+                        <i data-lucide="star" class="fill-blue-600 text-blue-600"></i>
+                        <i data-lucide="star" class="fill-blue-600 text-blue-600"></i>
+                        <i data-lucide="star" class="fill-blue-600 text-blue-600"></i>
+                        <i data-lucide="star" class="fill-blue-600 text-blue-600"></i>
+                        <i data-lucide="star" class="text-slate-200"></i>
+                    </div>
+                    <p class="text-xs font-bold text-slate-500 mb-2">● 満足度を支える要因</p>
+                    <ul class="text-xs space-y-2 list-disc pl-4 text-slate-600">
+                        <li>ボーネルンド遊具の安全性と清潔感</li>
+                        <li>親用の椅子が非常に快適であること</li>
+                        <li>六本木ヒルズ内という立地のステータス</li>
+                    </ul>
+                </div>
+                <div class="section-card border-l-8 border-l-orange-500 bg-orange-50/30">
+                    <h3 class="font-bold text-slate-600 mb-4">価格感：62%が「高い/やや高い」</h3>
+                    <div class="space-y-4">
+                        <div class="p-4 bg-white rounded-2xl shadow-sm border border-orange-200">
+                            <p class="text-[11px] font-bold text-orange-600 mb-1">ネガティブな要因分析</p>
+                            <p class="text-xs leading-relaxed">「1時間もいらない時がある」「大型施設（キドキド等）と比較すると遊具の密度が低く、割高に感じる」</p>
+                        </div>
+                        <p class="text-xs text-slate-500 italic">※一方で「親のドリンク代・場所代」と割り切る層は納得している。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="section-card bg-blue-900 text-white">
+                <h3 class="font-bold text-blue-300 mb-6 flex items-center gap-2"><i data-lucide="trending-up" class="w-4 h-4"></i> 再利用意向（Top 2 Box）：65%</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-blue-700 rounded-full flex items-center justify-center font-black">55%</div>
+                            <p class="text-sm">必ずまた利用したい</p>
+                        </div>
+                        <div class="flex items-center gap-4 text-blue-300">
+                            <div class="w-12 h-12 bg-blue-800 rounded-full flex items-center justify-center font-black">10%</div>
+                            <p class="text-sm">機会があれば利用したい</p>
+                        </div>
+                    </div>
+                    <div class="text-xs leading-relaxed text-blue-100 flex items-center">
+                        <p>「六本木という特殊なエリアにおいて、子連れが安心して座れる場所は他にない」という実感が、高価格感を超えた再利用意向を支えています。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE: RENTAL -->
+        <div id="page-rental" class="page space-y-12">
+            <h2 class="text-3xl font-black border-l-8 border-purple-600 pl-6">04. 貸切ニーズ（意向：55%）：イベント需要の深掘り</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- 利用理由 Top 5 -->
+                <div class="section-card border-t-8 border-t-blue-500">
+                    <h3 class="font-bold mb-6 text-blue-700">貸切を利用したい理由 Top 5</h3>
+                    <div class="space-y-4 text-sm font-medium text-slate-700">
+                        <div class="flex items-center gap-4"><span class="ranking-number bg-blue-600">1</span><span>誕生日会・ハーフバースデー</span></div>
+                        <div class="flex items-center gap-4"><span class="ranking-number bg-blue-500">2</span><span>ママ友・パパ友グループ交流会</span></div>
+                        <div class="flex items-center gap-4"><span class="ranking-number bg-blue-400">3</span><span>周りに気を遣わず自由に遊ばせたい</span></div>
+                        <div class="flex items-center gap-4 text-slate-500"><span class="ranking-number bg-slate-400">4</span><span>お受験対策・幼児教室の集まり</span></div>
+                        <div class="flex items-center gap-4 text-slate-500"><span class="ranking-number bg-slate-300">5</span><span>撮影会（プロカメラマン同行等）</span></div>
+                    </div>
+                </div>
+                <!-- 非利用理由 Top 5 -->
+                <div class="section-card border-t-8 border-t-slate-400">
+                    <h3 class="font-bold mb-6 text-slate-600">貸切を利用しない理由 Top 5</h3>
+                    <div class="space-y-4 text-sm font-medium text-slate-500">
+                        <div class="flex items-center gap-4"><span class="ranking-number bg-slate-700">1</span><span>貸切にするほどの人数が集まらない</span></div>
+                        <div class="flex items-center gap-4"><span class="ranking-number bg-slate-600">2</span><span>貸切料金が高い（高価格の懸念）</span></div>
+                        <div class="flex items-center gap-4"><span class="ranking-number bg-slate-500">3</span><span>一般利用したい時に使えない不便さ</span></div>
+                        <div class="flex items-center gap-4 text-slate-400"><span class="ranking-number bg-slate-400">4</span><span>他パーティルームとの比較（食事面）</span></div>
+                        <div class="flex items-center gap-4 text-slate-400"><span class="ranking-number bg-slate-300">5</span><span>予約の手間が面倒</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="section-card bg-slate-50 border border-slate-200">
+                <h3 class="font-bold text-slate-700 mb-4 italic">分析：貸切のスイッチングコスト</h3>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    「利用したい」層はヒルズ内でのコミュニティ（ママ友、幼児教室）が強い。
+                    一方で、一般客からは「土日に貸切が入っていると、せっかく立ち寄ったのに使えなくて腹立たしい」という声も。
+                    <span class="font-bold text-blue-600">特定グループの満足度が一般客の満足度を下げるリスク</span>があるため、運用には注意が必要。
+                </p>
+            </div>
+        </div>
+
+        <!-- PAGE: REQUESTS -->
+        <div id="page-requests" class="page space-y-12">
+            <h2 class="text-3xl font-black border-l-8 border-orange-400 pl-6">05. 改善要望：顧客が描く「理想のラウンジ」</h2>
+            
+            <div class="section-card bg-orange-50 border-orange-200">
+                <h3 class="font-bold text-orange-700 mb-8 flex items-center gap-2 uppercase tracking-widest text-xs">Analysis of Desired Utilization</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 text-center">
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-orange-100">
+                        <div class="text-2xl font-black text-orange-500 mb-1">#1</div>
+                        <p class="text-[10px] font-bold text-slate-700">30分単位設定</p>
+                        <p class="text-[9px] text-slate-400 mt-2 italic">隙間時間需要</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-orange-100">
+                        <div class="text-2xl font-black text-orange-500 mb-1">#2</div>
+                        <p class="text-[10px] font-bold text-slate-700">靴脱ぎエリア</p>
+                        <p class="text-[9px] text-slate-400 mt-2 italic">0-1歳児ニーズ</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-orange-100">
+                        <div class="text-2xl font-black text-orange-500 mb-1">#3</div>
+                        <p class="text-[10px] font-bold text-slate-700">SNS空き状況</p>
+                        <p class="text-[9px] text-slate-400 mt-2 italic">不確実性解消</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-orange-100">
+                        <div class="text-2xl font-black text-orange-500 mb-1">#4</div>
+                        <p class="text-[10px] font-bold text-slate-700">親向け飲食物</p>
+                        <p class="text-[9px] text-slate-400 mt-2 italic">付加価値アップ</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-orange-100">
+                        <div class="text-2xl font-black text-orange-500 mb-1">#5</div>
+                        <p class="text-[10px] font-bold text-slate-700">常設ワークショップ</p>
+                        <p class="text-[9px] text-slate-400 mt-2 italic">再来訪フック</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="section-card bg-white">
+                    <h3 class="font-bold text-slate-600 mb-6 flex items-center gap-2"><i data-lucide="message-square" class="w-4 h-4 text-blue-500"></i> 具体的な期待の声</h3>
+                    <div class="space-y-4 text-xs leading-relaxed italic text-slate-700">
+                        <p class="p-3 bg-slate-50 rounded-xl">「六本木ヒルズには子連れで行けるカフェが多いが、子供を解き放てる場所はここだけ。その価値を伸ばしてほしい。」</p>
+                        <p class="p-3 bg-slate-50 rounded-xl">「30分800円くらいのプランがあれば、買い物の合間に何度も利用すると思う。1時間は少し長く、プレッシャー。」</p>
+                    </div>
+                </div>
+                <div class="section-card bg-slate-900 text-white">
+                    <h3 class="font-bold text-orange-400 mb-4 flex items-center gap-2 uppercase tracking-widest text-[10px]">Strategic Perspective</h3>
+                    <p class="text-sm leading-relaxed text-slate-300">
+                        ユーザーは「利便性」と「精神的休息」のトレードオフとして本施設を捉えています。
+                        <span class="text-white font-bold">「行ってみないと入れるか分からない」</span>という最大の心理的障壁をテクノロジー（SNS連携）で解消し、<span class="text-white font-bold">「短時間利用」</span>という現実的な選択肢を与えることで、売上・満足度ともに更なる向上が期待できます。
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="max-w-6xl mx-auto mb-20 text-center px-6">
+        <div class="bg-slate-200 h-px w-full mb-8"></div>
+        <p class="text-slate-400 text-xs tracking-widest uppercase mb-4 font-bold italic">Bornelund Parent-Child Lounge Analysis Report</p>
+        <p class="text-slate-400 text-[10px]">本レポートは提供されたアンケートデータの全ての設問を深掘りし再構築したものです。</p>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(p => p.classList.remove('active'));
+
+            // Deactivate all nav links
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(l => l.classList.remove('active'));
+
+            // Show selected page
+            document.getElementById('page-' + pageId).classList.add('active');
+            
+            // Set active link
+            document.getElementById('nav-' + pageId).classList.add('active');
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
